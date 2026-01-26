@@ -130,3 +130,96 @@ Episode_Termination/cart_out_of_bounds: 0.0044
                       Time elapsed: 00:00:38
                                ETA: 00:00:00
 ```
+
+Change the reward function: 
+
+- File `myisaaclabproject2_env_cfg.py`, path: `C:\Users\myali\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based\myisaaclabproject2\myisaaclabproject2_env_cfg.py`
+
+Default parameters: 
+```py
+@configclass
+class RewardsCfg:
+    """Reward terms for the MDP."""
+
+    # (1) Constant running reward
+    alive = RewTerm(func=mdp.is_alive, weight=1.0)
+    # (2) Failure penalty
+    terminating = RewTerm(func=mdp.is_terminated, weight=-2.0)
+    # (3) Primary task: keep pole upright
+    pole_pos = RewTerm(
+        func=mdp.joint_pos_target_l2,
+        weight=-1.0,
+        params={"asset_cfg": SceneEntityCfg("robot", joint_names=["cart_to_pole"]), "target": 0.0},
+    )
+    # (4) Shaping tasks: lower cart velocity
+    cart_vel = RewTerm(
+        func=mdp.joint_vel_l1,
+        weight=-0.01,
+        params={"asset_cfg": SceneEntityCfg("robot", joint_names=["slider_to_cart"])},
+    )
+    # (5) Shaping tasks: lower pole angular velocity
+    pole_vel = RewTerm(
+        func=mdp.joint_vel_l1,
+        weight=-0.005,
+        params={"asset_cfg": SceneEntityCfg("robot", joint_names=["cart_to_pole"])},
+    )
+```
+
+New Parameters (doubling penalties)
+```py
+@configclass
+class RewardsCfg:
+    """Reward terms for the MDP."""
+
+    # (1) Constant running reward
+    alive = RewTerm(func=mdp.is_alive, weight=1.0)
+    # (2) Failure penalty
+    # Default: terminating = RewTerm(func=mdp.is_terminated, weight=-2.0)
+    terminating = RewTerm(func=mdp.is_terminated, weight=-4.0)
+    # (3) Primary task: keep pole upright
+    pole_pos = RewTerm(
+        func=mdp.joint_pos_target_l2,
+        # Default: weight=-1.0,
+        weight=-2.0,
+        params={"asset_cfg": SceneEntityCfg("robot", joint_names=["cart_to_pole"]), "target": 0.0},
+    )
+    # (4) Shaping tasks: lower cart velocity
+    cart_vel = RewTerm(
+        func=mdp.joint_vel_l1,
+        # Default: weight=-0.01,
+        weight=-0.02,
+        params={"asset_cfg": SceneEntityCfg("robot", joint_names=["slider_to_cart"])},
+    )
+    # (5) Shaping tasks: lower pole angular velocity
+    pole_vel = RewTerm(
+        func=mdp.joint_vel_l1,
+        # Default: weight=-0.005,
+        weight=-0.01,
+        params={"asset_cfg": SceneEntityCfg("robot", joint_names=["cart_to_pole"])},
+    )
+```
+
+New Traing results
+```
+                        Learning iteration 49/50
+
+                       Computation: 80882 steps/s (collection: 0.664s, learning 0.146s)
+             Mean action noise std: 0.37
+          Mean value_function loss: 0.0003
+               Mean surrogate loss: 0.0029
+                 Mean entropy loss: 0.4241
+                       Mean reward: 4.79
+               Mean episode length: 297.57
+              Episode_Reward/alive: 0.9936
+        Episode_Reward/terminating: -0.0001
+           Episode_Reward/pole_pos: -0.0108
+           Episode_Reward/cart_vel: -0.0131
+           Episode_Reward/pole_vel: -0.0083
+      Episode_Termination/time_out: 0.9174
+Episode_Termination/cart_out_of_bounds: 0.0830
+--------------------------------------------------------------------------------
+                   Total timesteps: 3276800
+                    Iteration time: 0.81s
+                      Time elapsed: 00:00:38
+                               ETA: 00:00:00
+```
