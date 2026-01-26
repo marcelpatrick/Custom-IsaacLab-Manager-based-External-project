@@ -9,7 +9,7 @@
 
 - Activate your environment: using "env_isaaclab" in this example: `conda activate env_isaaclab`
 - In your environments root folder, run `code MyIsaacLabProject2` to open it on VSCode.
-- Run a standard task that already came with the IsaacLab project as a test. In Anaconda Prompt terminal, inside your env root folder, run `python MyIsaacLabProject2/scripts/rsl_rl/train.py --task=Template-Myisaaclabproject2-v0`
+- Run a standard task that already came with the IsaacLab project as a test. In Anaconda Prompt terminal, inside your env root folder, run the cartpole task `python MyIsaacLabProject2/scripts/rsl_rl/train.py --task=Template-Myisaaclabproject2-v0`
 
 - Learning results
 ```
@@ -223,3 +223,7 @@ Episode_Termination/cart_out_of_bounds: 0.0830
                       Time elapsed: 00:00:38
                                ETA: 00:00:00
 ```
+
+#2. Run a Different training task
+- Run a different training task (different environment, different robot) using the same parameters you just modified.
+- In this example, run the Humanoid task" `python MyIsaacLabProject2/scripts/rsl_rl/train.py --task=Isaac-Humanoid-v0`
