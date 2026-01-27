@@ -226,35 +226,10 @@ Episode_Termination/cart_out_of_bounds: 0.0830
 
 #2. Run a Different training task
 - Create a new project with a rl library that contaings Isaac-Humanoid-v0 config files
-    -> *********** PAREI AQUI
+  
+*********** PAREI AQUI **********************
 
-Claude:
-```
-That's an excellent question, and I want to give you the most accurate answer. Let me search for more specific guidance on this, because the documents you've provided cover creating new tasks from scratch, but not explicitly how to import existing Isaac Lab tasks into an external project.Looking at your past conversations, I can see you've worked through creating external projects and understand the structure well. However, the documents provided don't explicitly cover importing existing Isaac Lab tasks into an external project—they focus on creating new ones from scratch.
 
-Let me be direct about the cleanest approach based on Isaac Lab's architecture, even though I should verify details:
-
-**The conceptually cleanest way would be:**
-
-1. **Find Isaac-Humanoid-v0's definition in Isaac Lab's source code.** This task exists somewhere in the Isaac Lab repository you have installed locally. It will have config files (`*_env_cfg.py`) and environment files (`*_env.py`).
-
-2. **Copy those files into your external project's task structure.** This means placing them in your project's equivalent location:
-   ```
-   source/YourProject/YourProject/tasks/manager/humanoid/
-   ├── __init__.py
-   ├── humanoid_env.py
-   ├── humanoid_env_cfg.py
-   └── agents/
-   ```
-
-3. **Register it in the gym registry.** In your `__init__.py`, call `gym.register()` pointing to the humanoid environment and config, just like the template does for the placeholder task.
-
-4. **Update your training scripts to reference it.** Modify `scripts/rsl_rl/train.py` (or whichever RL library you chose) to include the humanoid task in its imports.
-
-This keeps your external project clean and self-contained—all the config files you might want to modify are right there in your project folder, version-controlled separately from Isaac Lab.
-
-However, I want to give you the exact file paths and code snippets, which requires knowing precisely where Isaac-Humanoid-v0 is defined in your Isaac Lab installation. Would you be willing to run a quick command to help me locate it, or would you prefer I search the official Isaac Lab documentation for the exact answer?
-```
 
   
 - Run a different training task (different environment, different robot) using the same parameters you just modified.
