@@ -321,6 +321,9 @@ Action: Copy from the original project — no modifications needed (except if yo
 Original Path: `C:\Users\myali\isaaclab\source\isaaclab_tasks\isaaclab_tasks\manager_based\classic\humanoid\humanoid_env_cfg.py`
 
 ```py
+<details>
+<summary>Click to expand `humanoid_env_cfg.py</summary>
+
 # Copyright (c) 2022-2025, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
 # All rights reserved.
 #
@@ -542,6 +545,8 @@ class HumanoidEnvCfg(ManagerBasedRLEnvCfg):
         self.sim.physics_material.static_friction = 1.0
         self.sim.physics_material.dynamic_friction = 1.0
         self.sim.physics_material.restitution = 0.0
+
+</details>
 ```
 
 ### 2.3: TRAINING PARAMETERS (`rsl_rl_ppo_cfg.py`)
