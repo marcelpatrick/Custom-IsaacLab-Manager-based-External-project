@@ -601,34 +601,18 @@ class HumanoidPPORunnerCfg(RslRlOnPolicyRunnerCfg):
 ## 3. Create empty `__init__.py` file inside "agents" folder
 Original Path: `C:\Users\myali\isaaclab\source\isaaclab_tasks\isaaclab_tasks\manager_based\classic\humanoid\agents\__init__.py`
 
-## 4. Import the Humanoid Library
-In the `__init__.py` file under the "manager_based" folder, add:
-Path in your External Project: `C:\Users\[YOUR USER]\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based\__init__.py`
+# 3. Modify Parameters
 
-```py
-# Copyright (c) 2022-2025, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
-# All rights reserved.
-#
-# SPDX-License-Identifier: BSD-3-Clause
-
-import gymnasium as gym  # noqa: F401
-
-# IMPORT HUMANOID LIBRARY
-from . import humanoid  # noqa: F401
-```
-
-# 4. Modify Parameters
-
-## 4.1: Modify Reward Parameters (MDP)
+## 3.1: Modify Reward Parameters (MDP)
 File: `humanoid_env_cfg`
 Path: `C:\Users\[YOUR USER]\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based\humanoid\humanoid_env_cfg.py`
 
 
-## 4.2: Modify Training Paramters
+## 3.2: Modify Training Paramters
 File: `rsl_rl_ppo_cfg.py`
 Path: `C:\Users\[YOUR USER]\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based\humanoid\agents\rsl_rl_ppo_cfg.py`
 
-# 5. Run
+# 4. Run
 
 In your Anaconda Prompt terminal, at the project root  `(env_isaaclab) C:\Users\[YOUR USER]\MyIsaacLabProject2>` , run: `python scripts/rsl_rl/train.py --task=My-Isaac-Humanoid-v0`
 
