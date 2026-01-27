@@ -294,28 +294,24 @@ source/MyIsaacLabProject2/MyIsaacLabProject2/tasks/manager_based/
 #### 2.1. HUMANOID TASK'S INIT (`__init__.py`)
 Action: Copy from original project and modify
 - Add your project's name in `id`
+- Replace `f"{agents.__name__}` with the entire paths `isaaclab_tasks.manager_based.classic.humanoid.agents` - since we didn't import the entire agents folder. Use full path strings for the training configs pointing to Isaac Lab's original files
+- Delete `"rl_games_cfg_entry_point": "isaaclab_tasks.manager_based.classic.humanoid.agents:rl_games_ppo_cfg.yaml"` - You can delete this line if you're only using `rsl_rl` for training. The entry points are only needed for the RL libraries you actually use
+
 Original path: `C:\Users\[YOUR USER]\isaaclab\source\isaaclab_tasks\isaaclab_tasks\manager_based\classic\humanoid\__init__.py`
 
 ```py
 import gymnasium as gym
-from . import agents
 
-##
-# Register Gym environments.
-##
+from . import agents  # ← KEEP THIS since you have a local agents folder
 
 gym.register(
-
-    # ADD YOUR PROJECT'S NAME HERE:
     id="My-Isaac-Humanoid-v0",
     entry_point="isaaclab.envs:ManagerBasedRLEnv",
     disable_env_checker=True,
     kwargs={
         "env_cfg_entry_point": f"{__name__}.humanoid_env_cfg:HumanoidEnvCfg",
-        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:HumanoidPPORunnerCfg",
-        "rl_games_cfg_entry_point": f"{agents.__name__}:rl_games_ppo_cfg.yaml",
-        "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
-        "sb3_cfg_entry_point": f"{agents.__name__}:sb3_ppo_cfg.yaml",
+        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:HumanoidPPORunnerCfg",  # ← Uses YOUR local config
+        "rl_games_cfg_entry_point": "isaaclab_tasks.manager_based.classic.humanoid.agents:rl_games_ppo_cfg.yaml",  # ← Still uses Isaac Lab's
     },
 )
 ```
@@ -568,7 +564,9 @@ class HumanoidPPORunnerCfg(RslRlOnPolicyRunnerCfg):
     num_steps_per_env = 32
     max_iterations = 1000
     save_interval = 50
-    experiment_name = "humanoid"
+
+    # CUSTOMIZE YOUR EXPERIMEN NAME:
+    experiment_name = "my_humanoid"
     policy = RslRlPpoActorCriticCfg(
         init_noise_std=1.0,
         actor_obs_normalization=False,
@@ -612,4 +610,18 @@ import gymnasium as gym  # noqa: F401
 from . import humanoid  # noqa: F401
 ```
 
+# 4. Modify Parameters
+
+## 4.1: Modify Reward Parameters (MDP)
+File: `humanoid_env_cfg`
+Path: `C:\Users\[YOUR USER]\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based\humanoid\humanoid_env_cfg.py`
+
+
+## 4.2: Modify Training Paramters
+File: `rsl_rl_ppo_cfg.py`
+Path: `C:\Users\[YOUR USER]\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based\humanoid\agents\rsl_rl_ppo_cfg.py`
+
+# 5. Run
+
+In your Anaconda Prompt terminal, at the project root  `(env_isaaclab) C:\Users\[YOUR USER]\MyIsaacLabProject2>` , run: `python scripts/rsl_rl/train.py --task=My-Isaac-Humanoid-v0`
 
