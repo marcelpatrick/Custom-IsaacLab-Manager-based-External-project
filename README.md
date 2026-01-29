@@ -18,6 +18,9 @@
 - Here, we will run Cartpole task with its default training and reward function parameters. 
 - In Anaconda Prompt terminal, inside your env root folder, run the cartpole task `python MyIsaacLabProject2/scripts/rsl_rl/train.py --task=Template-Myisaaclabproject2-v0`
 
+<details>
+  <summary>Parameters and Results</summary>
+  
 - Learning results
 ```
                        Learning iteration 149/150
@@ -42,13 +45,17 @@ Episode_Termination/cart_out_of_bounds: 0.0061
                       Time elapsed: 00:01:39
                                ETA: 00:00:00
 ```
+</details>
 
 ## 1.2 Change Parameters
 
 ### 1.2.1: Change Training Parameters
 - Training Parameters are in this File `rsl_rl_ppo_cfg.py`: Path: `C:\Users\[YOUR USER]\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based\myisaaclabproject2\agents\rsl_rl_ppo_cfg.py`
 
-Default parameters: 
+<details>
+  <summary>Parameters and Results</summary>
+  
+- Default parameters: 
 ```py
 @configclass
 class PPORunnerCfg(RslRlOnPolicyRunnerCfg):
@@ -80,7 +87,7 @@ class PPORunnerCfg(RslRlOnPolicyRunnerCfg):
     )
 ```
 
-New parameters
+- New parameters
 ```py
 @configclass
 class PPORunnerCfg(RslRlOnPolicyRunnerCfg):
@@ -114,7 +121,7 @@ class PPORunnerCfg(RslRlOnPolicyRunnerCfg):
     )
 ```
 
-New training results:
+- New training results:
 ```py
                         Learning iteration 49/50
 
@@ -138,12 +145,16 @@ Episode_Termination/cart_out_of_bounds: 0.0044
                       Time elapsed: 00:00:38
                                ETA: 00:00:00
 ```
+</details>
 
 ### 1.2.2. Change the Reward Function (MDC) parameters: 
 
 - Reward Function (MDC) parameters are in this File `myisaaclabproject2_env_cfg.py`, path: `C:\Users\myali\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based\myisaaclabproject2\myisaaclabproject2_env_cfg.py`
 
-Default parameters: 
+<details>
+  <summary>Parameters and Results</summary>
+  
+- Default parameters: 
 ```py
 @configclass
 class RewardsCfg:
@@ -173,7 +184,7 @@ class RewardsCfg:
     )
 ```
 
-New Parameters (doubling penalties)
+- New Parameters (doubling penalties)
 ```py
 @configclass
 class RewardsCfg:
@@ -207,7 +218,7 @@ class RewardsCfg:
     )
 ```
 
-New Traing results
+- New Traing results
 ```
                         Learning iteration 49/50
 
@@ -231,6 +242,7 @@ Episode_Termination/cart_out_of_bounds: 0.0830
                       Time elapsed: 00:00:38
                                ETA: 00:00:00
 ```
+</details>
 
 # 2. Adding a new Task to your project (Humanoid)
 - First, make sure that your project has the libraries required to run the desired task. This task runs on rsl_rl that implements a PPO algorithm.
@@ -585,6 +597,9 @@ class HumanoidEnvCfg(ManagerBasedRLEnvCfg):
   Action: Copy from the original project, no changes needed (except if you want to edit training parameters)
   Original Path: `C:\Users\[YOUR USER]\isaaclab\source\isaaclab_tasks\isaaclab_tasks\manager_based\classic\humanoid\agents\rsl_rl_ppo_cfg.py`
 
+<details>
+  <summary>Training Parameters</summary>
+  
 ```py
 # Copyright (c) 2022-2025, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
 # All rights reserved.
@@ -627,7 +642,7 @@ class HumanoidPPORunnerCfg(RslRlOnPolicyRunnerCfg):
         max_grad_norm=1.0,
     )
 ```
-
+</details>
 
 # 3. Modify Parameters
 
