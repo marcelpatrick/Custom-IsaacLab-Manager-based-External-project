@@ -341,6 +341,9 @@ Path in your external project: `C:\Users\[YOUR USER]\MyIsaacLabProject2\source\M
   Original path: `C:\Users\[YOUR USER]\isaaclab\source\isaaclab_tasks\isaaclab_tasks\manager_based\classic\humanoid\__init__.py`
   Path in your external project: `C:\Users\[YOUR USER]\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based\humanoid\__init__.py`
 
+<details>
+  <summary>Click to expand __init__.py</summary>
+  
 ```py
 import gymnasium as gym
 
@@ -357,6 +360,7 @@ gym.register(
     },
 )
 ```
+</details>
 
 - **4.2: ENVIRONMENT CONFIG** (`humanoid_env_cfg.py`)
   Action: Copy from the original project — no modifications needed (except if you want to edit reward parameters)
@@ -364,7 +368,7 @@ gym.register(
   Path in your external project: `C:\Users\[YOUR USER]\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based\humanoid\humanoid_env_cfg.py`
 
 <details>
-<summary>Click to expand humanoid_env_cfg</summary>
+  <summary>Click to expand humanoid_env_cfg</summary>
 
 ```py
 # Copyright (c) 2022-2025, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
@@ -598,7 +602,7 @@ class HumanoidEnvCfg(ManagerBasedRLEnvCfg):
   Original Path: `C:\Users\[YOUR USER]\isaaclab\source\isaaclab_tasks\isaaclab_tasks\manager_based\classic\humanoid\agents\rsl_rl_ppo_cfg.py`
 
 <details>
-  <summary>Training Parameters</summary>
+  <summary>click here to expand rsl_rl_ppo_cfg.py</summary>
   
 ```py
 # Copyright (c) 2022-2025, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
