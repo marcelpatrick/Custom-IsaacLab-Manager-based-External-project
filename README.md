@@ -654,8 +654,8 @@ class HumanoidPPORunnerCfg(RslRlOnPolicyRunnerCfg):
   - However, for testing purposes, I will just modify the training parameter `max_iterations` in `rsl_rl_ppo_cfg.py` from 1000 to 50 for the simulation to finish faster.
  
 Baseline Results
-    ```py
 
+```
         ################################################################################
                             Learning iteration 49/50 
     
@@ -680,8 +680,7 @@ Baseline Results
                         Iteration time: 2.21s
                           Time elapsed: 00:01:47
                                    ETA: 00:00:02
-    ```
-  </details>
+```
 
 ## 3.1: Modify Reward Parameters (MDP)
 File: `humanoid_env_cfg`
