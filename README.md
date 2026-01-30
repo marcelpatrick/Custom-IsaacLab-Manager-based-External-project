@@ -653,10 +653,9 @@ class HumanoidPPORunnerCfg(RslRlOnPolicyRunnerCfg):
 - First I am going to run the `Template-My-Isaac-Humanoid-v0` task with its original parameters to have a baseline to compare results after changes.
   - However, for testing purposes, I will just modify the training parameter `max_iterations` in `rsl_rl_ppo_cfg.py` from 1000 to 50 for the simulation to finish faster.
  
-<summary>Baseline Results</summary>
-  <details>
-    
+Baseline Results
     ```py
+
         ################################################################################
                             Learning iteration 49/50 
     
