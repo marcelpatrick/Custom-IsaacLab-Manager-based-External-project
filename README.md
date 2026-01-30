@@ -1035,3 +1035,4 @@ Run `python scripts/list_envs.py` to ensure the your environment got registered 
 ```
 
 -> As you can see, after the parameter adjustments, the `mean reward` metric increased significantly, showing that training with the new parameters was more successful. 
+- However, `Episode_Termination/time_out` shows that 0 episondes lasted until timeout and `Episode_Termination/torso_height` tells us that 100% ended up with the robot falling which indicates that the policy still isn't stable. What is expected due to the low number of iterations (50). 
