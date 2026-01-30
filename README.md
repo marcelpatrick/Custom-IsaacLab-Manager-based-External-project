@@ -650,18 +650,385 @@ class HumanoidPPORunnerCfg(RslRlOnPolicyRunnerCfg):
 
 # 3. Modify Parameters
 
+- First I am going to run the `Template-My-Isaac-Humanoid-v0` task with its original parameters to have a baseline to compare results after changes.
+  - However, for testing purposes, I will just modify the training parameter `max_iterations` in `rsl_rl_ppo_cfg.py` from 1000 to 50 for the simulation to finish faster.
+ 
+<summary>Baseline Results</summary>
+  <details>
+    
+    ```py
+        ################################################################################
+                            Learning iteration 49/50 
+    
+                           Computation: 59242 steps/s (collection: 2.063s, learning 0.150s)
+                 Mean action noise std: 0.84
+              Mean value_function loss: 0.0271
+                   Mean surrogate loss: -0.0083
+                     Mean entropy loss: 26.0180
+                           Mean reward: 2.73
+                   Mean episode length: 63.78
+               Episode_Reward/progress: 0.0436
+                  Episode_Reward/alive: 0.1252
+                Episode_Reward/upright: 0.0043
+         Episode_Reward/move_to_target: 0.0305
+              Episode_Reward/action_l2: -0.0114
+                 Episode_Reward/energy: -0.0139
+       Episode_Reward/joint_pos_limits: -0.0150
+          Episode_Termination/time_out: 0.0000
+      Episode_Termination/torso_height: 1.0000
+    --------------------------------------------------------------------------------
+                       Total timesteps: 6553600
+                        Iteration time: 2.21s
+                          Time elapsed: 00:01:47
+                                   ETA: 00:00:02
+    ```
+  </details>
+
 ## 3.1: Modify Reward Parameters (MDP)
 File: `humanoid_env_cfg`
 Path: `C:\Users\[YOUR USER]\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based\humanoid\humanoid_env_cfg.py`
 
+<summary>New Reward Parameters</summary>
+  <details>
+    
+    ```py
+          # Copyright (c) 2022-2025, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
+    # All rights reserved.
+    #
+    # SPDX-License-Identifier: BSD-3-Clause
+    
+    import isaaclab.sim as sim_utils
+    from isaaclab.assets import AssetBaseCfg
+    from isaaclab.envs import ManagerBasedRLEnvCfg
+    from isaaclab.managers import EventTermCfg as EventTerm
+    from isaaclab.managers import ObservationGroupCfg as ObsGroup
+    from isaaclab.managers import ObservationTermCfg as ObsTerm
+    from isaaclab.managers import RewardTermCfg as RewTerm
+    from isaaclab.managers import SceneEntityCfg
+    from isaaclab.managers import TerminationTermCfg as DoneTerm
+    from isaaclab.scene import InteractiveSceneCfg
+    from isaaclab.terrains import TerrainImporterCfg
+    from isaaclab.utils import configclass
+    
+    import isaaclab_tasks.manager_based.classic.humanoid.mdp as mdp
+    
+    from isaaclab_assets.robots.humanoid import HUMANOID_CFG  # isort:skip
+    
+    
+    ##
+    # Scene definition
+    ##
+    
+    
+    @configclass
+    class MySceneCfg(InteractiveSceneCfg):
+        """Configuration for the terrain scene with a humanoid robot."""
+    
+        # terrain
+        terrain = TerrainImporterCfg(
+            prim_path="/World/ground",
+            terrain_type="plane",
+            collision_group=-1,
+            physics_material=sim_utils.RigidBodyMaterialCfg(static_friction=1.0, dynamic_friction=1.0, restitution=0.0),
+            debug_vis=False,
+        )
+    
+        # robot
+        robot = HUMANOID_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot")
+    
+        # lights
+        light = AssetBaseCfg(
+            prim_path="/World/light",
+            spawn=sim_utils.DistantLightCfg(color=(0.75, 0.75, 0.75), intensity=3000.0),
+        )
+    
+    
+    ##
+    # MDP settings
+    ##
+    
+    
+    @configclass
+    class ActionsCfg:
+        """Action specifications for the MDP."""
+    
+        joint_effort = mdp.JointEffortActionCfg(
+            asset_name="robot",
+            joint_names=[".*"],
+            scale={
+                ".*_waist.*": 67.5,
+                ".*_upper_arm.*": 67.5,
+                "pelvis": 67.5,
+                ".*_lower_arm": 45.0,
+                ".*_thigh:0": 45.0,
+                ".*_thigh:1": 135.0,
+                ".*_thigh:2": 45.0,
+                ".*_shin": 90.0,
+                ".*_foot.*": 22.5,
+            },
+        )
+    
+    
+    @configclass
+    class ObservationsCfg:
+        """Observation specifications for the MDP."""
+    
+        @configclass
+        class PolicyCfg(ObsGroup):
+            """Observations for the policy."""
+    
+            base_height = ObsTerm(func=mdp.base_pos_z)
+            base_lin_vel = ObsTerm(func=mdp.base_lin_vel)
+            base_ang_vel = ObsTerm(func=mdp.base_ang_vel, scale=0.25)
+            base_yaw_roll = ObsTerm(func=mdp.base_yaw_roll)
+            base_angle_to_target = ObsTerm(func=mdp.base_angle_to_target, params={"target_pos": (1000.0, 0.0, 0.0)})
+            base_up_proj = ObsTerm(func=mdp.base_up_proj)
+            base_heading_proj = ObsTerm(func=mdp.base_heading_proj, params={"target_pos": (1000.0, 0.0, 0.0)})
+            joint_pos_norm = ObsTerm(func=mdp.joint_pos_limit_normalized)
+            joint_vel_rel = ObsTerm(func=mdp.joint_vel_rel, scale=0.1)
+            feet_body_forces = ObsTerm(
+                func=mdp.body_incoming_wrench,
+                scale=0.01,
+                params={"asset_cfg": SceneEntityCfg("robot", body_names=["left_foot", "right_foot"])},
+            )
+            actions = ObsTerm(func=mdp.last_action)
+    
+            def __post_init__(self):
+                self.enable_corruption = False
+                self.concatenate_terms = True
+    
+        # observation groups
+        policy: PolicyCfg = PolicyCfg()
+    
+    
+    @configclass
+    class EventCfg:
+        """Configuration for events."""
+    
+        reset_base = EventTerm(
+            func=mdp.reset_root_state_uniform,
+            mode="reset",
+            params={"pose_range": {}, "velocity_range": {}},
+        )
+    
+        reset_robot_joints = EventTerm(
+            func=mdp.reset_joints_by_offset,
+            mode="reset",
+            params={
+                "position_range": (-0.2, 0.2),
+                "velocity_range": (-0.1, 0.1),
+            },
+        )
+    
+    
+    @configclass
+    class RewardsCfg:
+        """Reward terms for the MDP."""
+    
+        # (1) Reward for moving forward toward the target
+        # increasing rewards makes robot try walking sooner towards the target instead of just ballancing in place
+        progress = RewTerm(func=mdp.progress_reward, weight=1.5, params={"target_pos": (1000.0, 0.0, 0.0)})
+        # (2) Stay alive bonus
+        # lowering it prevents the robot from “playing it safe” by barely moving just to stay alive
+        alive = RewTerm(func=mdp.is_alive, weight=0.5)
+        # (3) gives points for keeping the body upright; the threshold is a marging
+        # Increases makes the robot stabilize earlier
+        upright = RewTerm(func=mdp.upright_posture_bonus, weight=0.5, params={"threshold": 0.95})
+        # (4) Reward for moving in the right direction
+        # Increasing it nudges the robot to go straight instead of shuffling sideways or spinning
+        move_to_target = RewTerm(
+            func=mdp.move_to_target_bonus, weight=0.2, params={"threshold": 0.9, "target_pos": (1000.0, 0.0, 0.0)}
+        )
+        # (5) Penalty for large action commands: subtracts points when the robot uses very large/jerky control commands.
+        # Lowering it allows for more exploration
+        action_l2 = RewTerm(func=mdp.action_l2, weight=-0.005)
+        # (6) Penalty for energy consumption
+        # Reducing allows more energy to learn faster and make more exploratory movements
+        energy = RewTerm(
+            func=mdp.power_consumption,
+            weight=-0.001,
+            params={
+                "gear_ratio": {
+                    ".*_waist.*": 67.5,
+                    ".*_upper_arm.*": 67.5,
+                    "pelvis": 67.5,
+                    ".*_lower_arm": 45.0,
+                    ".*_thigh:0": 45.0,
+                    ".*_thigh:1": 135.0,
+                    ".*_thigh:2": 45.0,
+                    ".*_shin": 90.0,
+                    ".*_foot.*": 22.5,
+                }
+            },
+        )
+        # (7) Penalty for reaching close to joint limits
+        # Penalty for bending joints too close to their limit angles; threshold is a margin. 
+        # Reducing lets the robot use its full range while learning; later it can tighten it for safety
+        joint_pos_limits = RewTerm(
+            func=mdp.joint_pos_limits_penalty_ratio,
+            weight=-0.05,
+            params={
+                "threshold": 0.95,
+                "gear_ratio": {
+                    ".*_waist.*": 67.5,
+                    ".*_upper_arm.*": 67.5,
+                    "pelvis": 67.5,
+                    ".*_lower_arm": 45.0,
+                    ".*_thigh:0": 45.0,
+                    ".*_thigh:1": 135.0,
+                    ".*_thigh:2": 45.0,
+                    ".*_shin": 90.0,
+                    ".*_foot.*": 22.5,
+                },
+            },
+        )
+    
+    
+    @configclass
+    class TerminationsCfg:
+        """Termination terms for the MDP."""
+    
+        # (1) Terminate if the episode length is exceeded
+        time_out = DoneTerm(func=mdp.time_out, time_out=True)
+        # (2) Terminate if the robot falls
+        torso_height = DoneTerm(func=mdp.root_height_below_minimum, params={"minimum_height": 0.8})
+    
+    
+    @configclass
+    class HumanoidEnvCfg(ManagerBasedRLEnvCfg):
+        """Configuration for the MuJoCo-style Humanoid walking environment."""
+    
+        # Scene settings
+        scene: MySceneCfg = MySceneCfg(num_envs=4096, env_spacing=5.0, clone_in_fabric=True)
+        # Basic settings
+        observations: ObservationsCfg = ObservationsCfg()
+        actions: ActionsCfg = ActionsCfg()
+        # MDP settings
+        rewards: RewardsCfg = RewardsCfg()
+        terminations: TerminationsCfg = TerminationsCfg()
+        events: EventCfg = EventCfg()
+    
+        def __post_init__(self):
+            """Post initialization."""
+            # general settings
+            self.decimation = 2
+            self.episode_length_s = 16.0
+            # simulation settings
+            self.sim.dt = 1 / 120.0
+            self.sim.render_interval = self.decimation
+            self.sim.physx.bounce_threshold_velocity = 0.2
+            # default friction material
+            self.sim.physics_material.static_friction = 1.0
+            self.sim.physics_material.dynamic_friction = 1.0
+            self.sim.physics_material.restitution = 0.0
+
+
+    ``` 
+  </details>
 
 ## 3.2: Modify Training Paramters
 File: `rsl_rl_ppo_cfg.py`
 Path: `C:\Users\[YOUR USER]\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based\humanoid\agents\rsl_rl_ppo_cfg.py`
 
+<summary>New Training Parameters</summary>
+  <details>
+    
+    ```py
+          # Copyright (c) 2022-2025, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
+    # All rights reserved.
+    #
+    # SPDX-License-Identifier: BSD-3-Clause
+    
+    from isaaclab.utils import configclass
+    
+    from isaaclab_rl.rsl_rl import RslRlOnPolicyRunnerCfg, RslRlPpoActorCriticCfg, RslRlPpoAlgorithmCfg
+    
+    
+    @configclass
+    class HumanoidPPORunnerCfg(RslRlOnPolicyRunnerCfg):
+        # Meaning: how many simulator steps you collect per environment before each policy update.
+        # Increasing makes it wait to gather more observations before updating the policy, which can improve learning stability, but also increases memory usage and training time per update.
+        num_steps_per_env = 64 
+        # Meaning: how many training update cycles PPO will run total.
+        # More iterations gives it more chances to learn
+        max_iterations = 100
+        # how often to save checkpoints
+        save_interval = 50
+        
+        # CUSTOMIZE YOUR EXPERIMEN NAME:
+        experiment_name = "my_humanoid"
+        policy = RslRlPpoActorCriticCfg(
+            init_noise_std=1.0,     # too high = thrashing and falling; too low = not enough exploration to discover walking.
+            # Meaning: automatically rescales what the policy “sees” to more consistent ranges
+            # improves stability and speed of learning when observations have very different scales
+            actor_obs_normalization=True,
+            # same as above, but for the value estimator (the part judging how good states are)
+            critic_obs_normalization=True,
+            actor_hidden_dims=[400, 200, 100],
+            critic_hidden_dims=[400, 200, 100],
+            activation="elu",
+        )
+        algorithm = RslRlPpoAlgorithmCfg(
+            value_loss_coef=1.0,
+            use_clipped_value_loss=True,
+            # Limit on how big the policy update step can be
+            # calculates diff in action for each specific action.
+            # ensures a smoother learning curve, preventing large updates that could destabilize training.
+            clip_param=0.2,
+            # Exploring more. extra reward for being a bit random (trying new actions)
+            entropy_coef=0.005,
+            # how many times you learn from the same collected data per update.
+            num_learning_epochs=8,
+            num_mini_batches=4,
+            # how big each learning step is
+            # slightly smaller steps often prevent “learn then collapse” behavior in locomotion
+            learning_rate=3e-4,
+            schedule="adaptive",
+            gamma=0.99,
+            lam=0.95,
+            # Limit on how big the policy update step can be
+            # calculates diff in action provability across all possible actions of that policy
+            # ensures a smoother learning curve, preventing large updates that could destabilize training.
+            desired_kl=0.01,
+            max_grad_norm=1.0,
+        )
+  
+    ```
+    
+  </details>
+
+***New Results**
+```py
+################################################################################
+                       Learning iteration 99/100
+
+                       Computation: 56023 steps/s (collection: 4.222s, learning 0.457s)
+             Mean action noise std: 0.96
+          Mean value_function loss: 0.2883
+               Mean surrogate loss: -0.0154
+                 Mean entropy loss: 28.7264
+                       Mean reward: 26.71
+               Mean episode length: 368.54
+           Episode_Reward/progress: 1.1045
+              Episode_Reward/alive: 0.7711
+            Episode_Reward/upright: 0.0164
+     Episode_Reward/move_to_target: 0.1731
+          Episode_Reward/action_l2: -0.1176
+             Episode_Reward/energy: -0.1558
+   Episode_Reward/joint_pos_limits: -0.1323
+      Episode_Termination/time_out: 0.0146
+  Episode_Termination/torso_height: 0.9854
+--------------------------------------------------------------------------------
+                   Total timesteps: 26214400
+                    Iteration time: 4.68s
+                      Time elapsed: 00:07:45
+                               ETA: 00:00:04
+
+```
+
 # 4. Run
 
-In your Anaconda Prompt terminal, at the project root  `(env_isaaclab) C:\Users\[YOUR USER]\MyIsaacLabProject2>` , run: `python scripts/rsl_rl/train.py --task=Template-My-Isaac-Humanoid-v0`
+In your Anaconda Prompt terminal, at the project root (or inside the VSCode project)  `(env_isaaclab) C:\Users\[YOUR USER]\MyIsaacLabProject2>` , run: `python scripts/rsl_rl/train.py --task=Template-My-Isaac-Humanoid-v0`
 Exit with `Ctrl C`
 
 Run `python scripts/list_envs.py` to ensure the your environment got registered in Gymnasium. Your project name must appear on the list.
