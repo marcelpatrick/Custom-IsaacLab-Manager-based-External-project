@@ -995,35 +995,6 @@ Path: `C:\Users\[YOUR USER]\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaac
     
   </details>
 
-***New Results**
-```py
-################################################################################
-                       Learning iteration 99/100
-
-                       Computation: 56023 steps/s (collection: 4.222s, learning 0.457s)
-             Mean action noise std: 0.96
-          Mean value_function loss: 0.2883
-               Mean surrogate loss: -0.0154
-                 Mean entropy loss: 28.7264
-                       Mean reward: 26.71
-               Mean episode length: 368.54
-           Episode_Reward/progress: 1.1045
-              Episode_Reward/alive: 0.7711
-            Episode_Reward/upright: 0.0164
-     Episode_Reward/move_to_target: 0.1731
-          Episode_Reward/action_l2: -0.1176
-             Episode_Reward/energy: -0.1558
-   Episode_Reward/joint_pos_limits: -0.1323
-      Episode_Termination/time_out: 0.0146
-  Episode_Termination/torso_height: 0.9854
---------------------------------------------------------------------------------
-                   Total timesteps: 26214400
-                    Iteration time: 4.68s
-                      Time elapsed: 00:07:45
-                               ETA: 00:00:04
-
-```
-
 # 4. Run
 
 In your Anaconda Prompt terminal, at the project root (or inside the VSCode project)  `(env_isaaclab) C:\Users\[YOUR USER]\MyIsaacLabProject2>` , run: `python scripts/rsl_rl/train.py --task=Template-My-Isaac-Humanoid-v0`
@@ -1032,3 +1003,35 @@ Exit with `Ctrl C`
 Run `python scripts/list_envs.py` to ensure the your environment got registered in Gymnasium. Your project name must appear on the list.
   -> Your project name **must** start with "Template-" (like `Template-My-Isaac-Humanoid-v0`) otherwise it won't register
 
+# 5. Results
+
+***New Results**
+```
+################################################################################
+                        Learning iteration 49/50
+
+                       Computation: 20176 steps/s (collection: 12.269s, learning 0.723s)
+             Mean action noise std: 0.95
+          Mean value_function loss: 0.1038
+               Mean surrogate loss: -0.0206
+                 Mean entropy loss: 28.7003
+                       Mean reward: 5.38
+               Mean episode length: 108.27
+           Episode_Reward/progress: 0.1557
+              Episode_Reward/alive: 0.2179
+            Episode_Reward/upright: 0.0057
+     Episode_Reward/move_to_target: 0.0494
+          Episode_Reward/action_l2: -0.0272
+             Episode_Reward/energy: -0.0367
+   Episode_Reward/joint_pos_limits: -0.0339
+      Episode_Termination/time_out: 0.0000
+  Episode_Termination/torso_height: 1.0000
+--------------------------------------------------------------------------------
+                   Total timesteps: 13107200
+                    Iteration time: 12.99s
+                      Time elapsed: 00:06:06
+                               ETA: 00:00:07
+
+```
+
+-> As you can see, after the parameter adjustments, the `mean reward` metric increased significantly, showing that training with the new parameters was more successful. 
