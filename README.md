@@ -14,6 +14,9 @@
 - When we create an external project using [Template Generator](https://github.com/marcelpatrick/create-a-new-external-isaaclab-project/blob/main/README.md), it is created with only one task: Cartpole
 - Here we will run the Cartpole task that already came with the project
 
+<summary>Running a Task Already in Your Project (Expand)</summary>
+  <details>
+
 ## 1.1. Run with default parameters:
 - Here, we will run Cartpole task with its default training and reward function parameters. 
 - In Anaconda Prompt terminal, inside your env root folder, run the cartpole task `python MyIsaacLabProject2/scripts/rsl_rl/train.py --task=Template-Myisaaclabproject2-v0`
@@ -242,6 +245,8 @@ Episode_Termination/cart_out_of_bounds: 0.0830
                       Time elapsed: 00:00:38
                                ETA: 00:00:00
 ```
+</details>
+
 </details>
 
 # 2. Adding a new Task to your project (Humanoid)
