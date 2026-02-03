@@ -666,6 +666,9 @@ class HumanoidPPORunnerCfg(RslRlOnPolicyRunnerCfg):
 
 # 3. Modify Parameters
 
+<summary>Modify Parameters (Expand)</summary>
+  <details>
+    
 - First I am going to run the `Template-My-Isaac-Humanoid-v0` task with its original parameters to have a baseline to compare results after changes.
   - However, for testing purposes, I will just modify the training parameter `max_iterations` in `rsl_rl_ppo_cfg.py` from 1000 to 50 for the simulation to finish faster.
  
@@ -701,9 +704,6 @@ Baseline Results
 ## 3.1: Modify Reward Parameters (MDP)
 File: `humanoid_env_cfg`
 Path: `C:\Users\[YOUR USER]\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based\humanoid\humanoid_env_cfg.py`
-
-<summary>Modify Parameters (Expand)</summary>
-  <details>
 
 <summary>New Reward Parameters</summary>
   <details>
