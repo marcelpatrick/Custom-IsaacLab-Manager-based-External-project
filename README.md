@@ -1056,4 +1056,39 @@ Run `python scripts/list_envs.py` to ensure the your environment got registered 
 ```
 
 -> As you can see, after the parameter adjustments, the `mean reward` metric increased significantly, showing that training with the new parameters was more successful. 
-- However, `Episode_Termination/time_out` shows that 0 episondes lasted until timeout and `Episode_Termination/torso_height` tells us that 100% ended up with the robot falling which indicates that the policy still isn't stable. What is expected due to the low number of iterations (50). 
+- However, `Episode_Termination/time_out` shows that 0 episondes lasted until timeout and `Episode_Termination/torso_height` tells us that 100% ended up with the robot falling which indicates that the policy still isn't stable. What is expected due to the low number of iterations (50).
+- 
+
+# SIMPLE
+
+1. Create project
+2. Copy new task folder from the original IsaacLab project to your project.
+3. Rename folder from MyIsaacLabProject to Cartpole
+4. TASK'S INIT
+   - Path: `"C:\Users\[YOUR USER]\MyIsaacLabProject5\source\MyIsaacLabProject5\MyIsaacLabProject5\tasks\manager_based\ant\__init__.py"`
+   - Rename project's name in id -> Your project's name must contain "Template-" before the name otherwise it will not register on Gymnasium and you will not be able to run it with your custom parameters. eg `Template-My-Isaac-Ant-v0`
+   - `id="Template-My-Isaac-Ant-v0",      # << RENAME`
+5. Rename Experiment
+  - Path: "C:\Users\[YOUR USER]\MyIsaacLabProject5\source\MyIsaacLabProject5\MyIsaacLabProject5\tasks\manager_based\ant\agents\rsl_rl_ppo_cfg.py"
+  - `experiment_name = "my_ant" # << RENAME`
+6. Customize Training Parameters
+  - File: `rl_games_ppo_cfg.yaml`. The YAML file will depend on the library you are using. Eg. if you use rsl_rl the file will be `rsl_rl_ppo_cfg`
+  - Path: `"C:\Users\[YOUR USER]\MyIsaacLabProject5\source\MyIsaacLabProject5\MyIsaacLabProject5\tasks\manager_based\ant\agents\rl_games_ppo_cfg.yaml"`
+  - Example:
+```py
+    max_epochs: 20
+    save_best_after: 10
+    save_frequency: 10
+```
+7. Customize Reward Parameters
+ - File: `ant_env_cfg`
+ - Path: `"C:\Users\[YOUR USER]\MyIsaacLabProject5\source\MyIsaacLabProject5\MyIsaacLabProject5\tasks\manager_based\ant\ant_env_cfg.py"`
+ - Example:
+```py
+
+```
+8. Read results
+ - run: `tensorboard --logdir logs/rl_games/ant/2026-02-03_10-18-27` or select the last created folder inside `logs/rl_games/ant`
+ - Open the provided localhost address in your browser
+
+
