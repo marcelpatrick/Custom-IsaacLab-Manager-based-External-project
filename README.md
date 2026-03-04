@@ -152,7 +152,7 @@ Episode_Termination/cart_out_of_bounds: 0.0044
 
 ### 1.2.2. Change the Reward Function (MDC) parameters: 
 
-- Reward Function (MDC) parameters are in this File `myisaaclabproject2_env_cfg.py`, path: `C:\Users\myali\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based\myisaaclabproject2\myisaaclabproject2_env_cfg.py`
+- Reward Function (MDC) parameters are in this File `myisaaclabproject2_env_cfg.py`, path: `C:\Users\[YOUR USER]\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based\myisaaclabproject2\myisaaclabproject2_env_cfg.py`
 
 <details>
   <summary>Parameters and Results</summary>
@@ -380,7 +380,7 @@ gym.register(
 
 - **4.2: ENVIRONMENT CONFIG** (`humanoid_env_cfg.py`)
   Action: Copy from the original project — no modifications needed (except if you want to edit reward parameters)
-  Original Path: `C:\Users\myali\isaaclab\source\isaaclab_tasks\isaaclab_tasks\manager_based\classic\humanoid\humanoid_env_cfg.py`
+  Original Path: `C:\Users\[YOUR USER]\isaaclab\source\isaaclab_tasks\isaaclab_tasks\manager_based\classic\humanoid\humanoid_env_cfg.py`
   Path in your external project: `C:\Users\[YOUR USER]\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based\humanoid\humanoid_env_cfg.py`
 
 <details>
