@@ -223,6 +223,7 @@ class RewardsCfg:
         params={"asset_cfg": SceneEntityCfg("robot", joint_names=["cart_to_pole"])},
     )
 ```
+Run again: In Anaconda Prompt terminal, inside your env root folder, run the cartpole task with `python MyIsaacLabProject2/scripts/rsl_rl/train.py --task=Template-Myisaaclabproject2-v0`
 
 - New Traing results
 ```
