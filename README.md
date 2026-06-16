@@ -1,5 +1,8 @@
 # Custom-IsaacLab-Manager-based-External-project
 
+**Video Tutorials**
+- Video 1: https://youtu.be/L701v9QuQG4 
+
 # Pre-requisites:
 
 - Install IsaacLab and create a python environment: https://github.com/marcelpatrick/IsaacSim-IsaacLab-installation-for-Windows-Easy-Tutorial?search=1
