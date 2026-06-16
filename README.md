@@ -155,6 +155,7 @@ Episode_Termination/cart_out_of_bounds: 0.0044
 ### 1.2.2. Change the Reward Function (MDC) parameters: 
 
 - Reward Function (MDC) parameters are in this File `myisaaclabproject2_env_cfg.py`, path: `C:\Users\[YOUR USER]\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based\myisaaclabproject2\myisaaclabproject2_env_cfg.py`
+- Or, if you changed the task folder name to `cartpole` in the previous tutorial: Path: `C:\Users\[YOUR USER]\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based\cartpole\myisaaclabproject2_env_cfg.py`
 
 <details>
   <summary>Parameters and Results</summary>
