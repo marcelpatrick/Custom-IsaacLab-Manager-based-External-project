@@ -8,7 +8,7 @@
 # 0. Setup
 
 - Activate your environment (using "env_isaaclab" in this example): `conda activate env_isaaclab`
-- Open your external project on VSCode (using "MyIsaacLabProject2" in this example): In your environments root folder, run `code MyIsaacLabProject2` to open it on VSCode.
+- If you want to open your external project on VSCode (using "MyIsaacLabProject2" in this example): In your environment's root folder, run `code MyIsaacLabProject2` to open it on VSCode.
 
 # 1. Running a Task Already in Your Project (Cartpole)
 - When we create an external project using [Template Generator](https://github.com/marcelpatrick/create-a-new-external-isaaclab-project/blob/main/README.md), it is created with only one task: Cartpole
@@ -54,6 +54,7 @@ Episode_Termination/cart_out_of_bounds: 0.0061
 
 ### 1.2.1: Change Training Parameters
 - Training Parameters are in this File `rsl_rl_ppo_cfg.py`: Path: `C:\Users\[YOUR USER]\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based\myisaaclabproject2\agents\rsl_rl_ppo_cfg.py`
+- Or, if you changed the task folder name to `cartpole` in the previous tutorial: Path: `C:\Users\[YOUR USER]\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based\cartpole\agents\rsl_rl_ppo_cfg.py`
 
 <details>
   <summary>Parameters and Results</summary>
