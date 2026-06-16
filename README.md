@@ -78,11 +78,11 @@ class PPORunnerCfg(RslRlOnPolicyRunnerCfg):
     algorithm = RslRlPpoAlgorithmCfg(
         value_loss_coef=1.0,
         use_clipped_value_loss=True,
-        clip_param=0.2,
-        entropy_coef=0.005,
+        clip_param=0.2, # how much % the new policy can differ from the old policy, prevents radical updates.
+        entropy_coef=0.005, # how much exploration the robot does, how random are the moves it tries, before it starts learning (curiosity coefficient)
         num_learning_epochs=5,
         num_mini_batches=4,
-        learning_rate=1.0e-3,
+        learning_rate=1.0e-3, # how fast the algorithm tries to converge towards the point of minimum error
         schedule="adaptive",
         gamma=0.99,
         lam=0.95,
@@ -166,23 +166,23 @@ Episode_Termination/cart_out_of_bounds: 0.0044
 class RewardsCfg:
     """Reward terms for the MDP."""
 
-    # (1) Constant running reward
+    # (1) Constant running reward: Every single timestep the pole is still up and the cart is still on the rail (not terminated), reward = +1. If higher, it incentivizes the robot to stay alive longer. 
     alive = RewTerm(func=mdp.is_alive, weight=1.0)
-    # (2) Failure penalty
+    # (2) Failure penalty: The "game over" penalty. The instant the episode fails (pole falls past the limit, or cart slides off the track)
     terminating = RewTerm(func=mdp.is_terminated, weight=-2.0)
-    # (3) Primary task: keep pole upright
+    # (3) Primary task: keep pole upright: This measures how far the pole's angle is from upright (target: 0.0)
     pole_pos = RewTerm(
         func=mdp.joint_pos_target_l2,
         weight=-1.0,
         params={"asset_cfg": SceneEntityCfg("robot", joint_names=["cart_to_pole"]), "target": 0.0},
     )
-    # (4) Shaping tasks: lower cart velocity
+    # (4) Shaping tasks: lower cart velocity: penalizes if cart moves too fast - discourages violent moves
     cart_vel = RewTerm(
         func=mdp.joint_vel_l1,
         weight=-0.01,
         params={"asset_cfg": SceneEntityCfg("robot", joint_names=["slider_to_cart"])},
     )
-    # (5) Shaping tasks: lower pole angular velocity
+    # (5) Shaping tasks: lower pole angular velocity: penalizes if pole moves too fast - discourages violent moves
     pole_vel = RewTerm(
         func=mdp.joint_vel_l1,
         weight=-0.005,
