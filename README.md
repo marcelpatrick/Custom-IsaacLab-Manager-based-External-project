@@ -257,16 +257,18 @@ Episode_Termination/cart_out_of_bounds: 0.0830
 </details>
 
 # 2. Adding a new Task to your project (Humanoid)
-- First, make sure that your project has the libraries required to run the desired task. Tasks in these examples run on rsl_rl or rl_games libraries that implement a PPO algorithm.
+- First, make sure that your external project was created with the Reinforcement Learning libraries required to run the desired task: refer to https://github.com/marcelpatrick/create-a-new-external-isaaclab-project#1-create-a-new-external-project-using-the-template-wizard 
+- Tasks in these examples run on rsl_rl or rl_games libraries that implement a PPO algorithm.
+- If you try to run a task that requires a library not installed in your project, it will error. 
 
-## 2.1. Runing a Different training task with Default Parameters
+## 2.1. Running a Different training task with Default Parameters
 
 <summary>Running a different task with default parameters (Expand)</summary>
   <details>
 
 - You can use the same project and you don't need to add a new task to you project as long as the new task is registered within Gymnasium and as long as you don't need to change its parameters.
-- IsaacLab will access this task on Gymnasium an run it with its default parameters. With this approach, it is not possible to modify the task parameters 
-- In this example we'll be running the Humanoid task: Isaac-Humanoid-v0
+- IsaacLab will access this task on Gymnasium and run it with its default parameters. With this approach, it is not possible to modify the task parameters 
+- In this example, we'll be running the Humanoid task: Isaac-Humanoid-v0
 - Run: " `python MyIsaacLabProject2/scripts/rsl_rl/train.py --task=Isaac-Humanoid-v0`
 
   </details>
