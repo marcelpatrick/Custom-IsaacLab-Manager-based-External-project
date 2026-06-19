@@ -270,16 +270,18 @@ Episode_Termination/cart_out_of_bounds: 0.0830
 - Your external project does not contain these tasks/files. But you can run them from your external project with command `(env_isaaclab) C:\Users\[YOUR USER]\MyIsaacLabProject2>python scripts/rsl_rl/train.py --task=[TASK NAME]`
 - This is because when you install the IsaacLab cloned project and your external project with `pip install -e` (https://github.com/marcelpatrick/create-a-new-external-isaaclab-project#2-install-the-project) you make these projects importable in the same Python env.
 - Also, the tasks in these two projects conform to the Gymnasium standard that allows their tasks to be called and ran in the same manner from different projects. 
-  - Gymnasium is a Python library that defines (and enforces) a standard interface for reinforcement learning environments and allows us to name tasks.
-    - The standard it enforces makes so that every task (no matter how different) always has the same main components (eg.reset(), step()methods), allowing them to be runnable by the same script (train.py)
-    - The naming functionality allows train.py to find and run tasks by their assigned names.
+  - Gymnasium is a Python library that defines a standard way to code reinforcement learning tasks and allows us to name them.
+    - The standard ensures that every task (no matter how different) always has the same main components (`reset(), step()` etc), allowing them to be runnable by the same script (`train.py`)
+    - The naming functionality allows `train.py` to find and run tasks by their assigned names.
 - Your external project will then access whatever built-in tasks you name and run them with their default parameters. With this approach, it is not possible to modify the task parameters because the task's config files live in the read-only IsaacLab install, not in your project.
+  
 - These are some of the other built-in tasks you can run from your external project. From inside your external project folder `(env_isaaclab) C:\Users\[YOUR USER]\MyIsaacLabProject2>` run:
   - `python scripts/rsl_rl/train.py --task=Isaac-Humanoid-v0`
   - `python scripts/rsl_rl/train.py --task=Isaac-Quadcopter-Direct-v0`
   - `python scripts/rsl_rl/train.py --task=Isaac-Ant-v0`
   - `python scripts/rsl_rl/train.py --task=Isaac-Velocity-Rough-Unitree-A1-Play-v0`
- - Note that you just need to switch their names and the same command and script (train.py) are capable of running them. Again, this is because they were all registered in the same python env (with `pip install -e`) and they all follow Gymnasium standards.
+ - Note that you just need to switch their names and the same command and script (`train.py`) is capable of running them. Again, this is because they were all registered in the same python env (with `pip install -e`) and they all follow Gymnasium standards.
+   
  - Benefit: The master project (IsaacLab) remains safe and untouched. Your project stays a safe sandbox. Your custom edits, configs, and experiments live only in MyIsaacLabProject. You can break, rename, or delete things freely without ever touching the shared IsaacLab install that everything else depends on. Built-in tasks give you a ready-made baseline to test or compare against, and running them from your project lets you use them as a starting point — then copy the one task you actually want to modify, while still being able to run the unmodified baseline task from the IsaacLab master project, for comparison.
 
   </details>
