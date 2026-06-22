@@ -1,8 +1,8 @@
 # Custom-IsaacLab-Manager-based-External-project
 
 **Video Tutorials**
-- Video 1: https://youtu.be/L701v9QuQG4
-- Video 2: https://youtu.be/fq9DRCj9i7E 
+- Video 1: https://youtu.be/L701v9QuQG4 - Running a Task Already in Your Project (Cartpole) - Change parameters: Chapter 1.2
+- Video 2: https://youtu.be/fq9DRCj9i7E - 
 
 # Pre-requisites:
 
