@@ -257,11 +257,12 @@ Episode_Termination/cart_out_of_bounds: 0.0830
 
 </details>
 
-# 2 Running different tasks with default parameters
-
+Next, we are going to run different tasks in our external project: 
 - First, make sure that your external project was created with the Reinforcement Learning libraries required to run the desired task: refer to https://github.com/marcelpatrick/create-a-new-external-isaaclab-project#1-create-a-new-external-project-using-the-template-wizard 
 - Tasks in these examples run on rsl_rl or rl_games libraries that implement a PPO algorithm.
 - If you try to run a task that requires a library not installed in your project, it will error. 
+
+# 2 Running different tasks with default parameters
 
 <summary>Running a different task with default parameters (Expand)</summary>
   <details>
@@ -286,11 +287,7 @@ Episode_Termination/cart_out_of_bounds: 0.0830
 
   </details>
   
-# 3. Run different tasks with Custom Parameters
-
-- First, make sure that your external project was created with the Reinforcement Learning libraries required to run the desired task: refer to https://github.com/marcelpatrick/create-a-new-external-isaaclab-project#1-create-a-new-external-project-using-the-template-wizard 
-- Tasks in these examples run on rsl_rl or rl_games libraries that implement a PPO algorithm.
-- If you try to run a task that requires a library not installed in your project, it will error. 
+# 3. Running different tasks with Custom Parameters
 
 <summary>Run a different task with custom parameters (Expand)</summary>
   <details>
@@ -402,14 +399,13 @@ Episode_Termination/cart_out_of_bounds: 0.0830
         )
 
    ```
-
   </details>
 
-### 3.2.2: Modify Training Parameters
+### 3.2.2: Modifying Training Parameters
 - File: `rsl_rl_ppo_cfg.py`
 - Path: `C:\Users\[YOUR USER]\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based\humanoid\agents\rsl_rl_ppo_cfg.py`
 
-<summary>New Training Parameters</summary>
+<summary>New Training Parameters (Expand)</summary>
   <details>
     
     ```py
@@ -458,9 +454,6 @@ Episode_Termination/cart_out_of_bounds: 0.0830
         )
   
     ```
-
-
-
     
   </details>
 
