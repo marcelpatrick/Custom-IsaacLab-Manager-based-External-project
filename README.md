@@ -321,8 +321,9 @@ Next, we are going to run different tasks in our external project:
   -> **Your project's name must contain "Template-"** before the name; otherwise, it will not register on Gymnasium and you will not be able to run it with your custom parameters.
   
 4. Run the copied Humanoid task with default parameters to test it
-   - Run `python scripts/list_envs.py` to ensure that your environment has been registered in Gymnasium. Your project nameID must appear on the list containing "Template-" (eg: Template-Isaac-Humanoid-v0) otherwise, it won't register on Gymnasium.
-  - In your Anaconda Prompt terminal, activate your Python environment and go to the project root: `(env_isaaclab) C:\Users\[YOUR USER]\MyIsaacLabProject2>`, run: `python scripts/rsl_rl/train.py --task=Template-Isaac-Humanoid-v0`. Exit with Ctrl C
+- Run `python scripts/list_envs.py` to ensure that your environment has been registered in Gymnasium. Your project nameID must appear on the list containing "Template-" (eg: Template-Isaac-Humanoid-v0) otherwise, it won't register on Gymnasium.
+  
+- In your Anaconda Prompt terminal, activate your Python environment and go to the project root: `(env_isaaclab) C:\Users\[YOUR USER]\MyIsaacLabProject2>`, run: `python scripts/rsl_rl/train.py --task=Template-Isaac-Humanoid-v0`. Exit with Ctrl C
 
 ## 3.2: Modifying Parameters
 
