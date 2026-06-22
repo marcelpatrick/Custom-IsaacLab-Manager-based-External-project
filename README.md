@@ -297,6 +297,37 @@ Episode_Termination/cart_out_of_bounds: 0.0830
 
 **Task: `My-Humanoid-v0`**
 
+<summary>Copying the Entire Folder (Expand)</summary>
+  <details>
+    
+  1. Copy the humanoid folder from the IsaacLab master project: `C:\Users\[YOUR USER]\IsaacLab\source\isaaclab_tasks\isaaclab_tasks\manager_based\classic\humanoid`, into your external project's task folder: `C:\Users\[YOUR USER]\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based`
+  2. Add this task as an import inside the Project's `__init__.py`: in the manager_based folder inside your external project: `"C:\Users\[YOUR USER]\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based\__init__.py"`.
+     ```py
+     import gymnasium as gym  # noqa: F401
+     
+     from . import humanoid # <<< ADD THIS LINE
+    ```
+  3. Rename: Add "Template" to your project's nameID inside the task's (Humanoid) `__init__.py`: 
+  - Open `__init__.py`: `"C:\Users\[YOUR USER]\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based\humanoid\__init__.py"` 
+    ```py
+    gym.register(
+    id="Template-Isaac-Humanoid-v0",   # <<< Add "Template-" prefix to avoid name collision with OpenAI Gym Humanoid-v2
+    entry_point="isaaclab.envs:ManagerBasedRLEnv",
+    disable_env_checker=True,
+    kwargs={
+        "env_cfg_entry_point": f"{__name__}.humanoid_env_cfg:HumanoidEnvCfg",
+        "rsl_rl_cfg_entry_point": f"{agents.__name__}.rsl_rl_ppo_cfg:HumanoidPPORunnerCfg",
+        "rl_games_cfg_entry_point": f"{agents.__name__}:rl_games_ppo_cfg.yaml",
+        "skrl_cfg_entry_point": f"{agents.__name__}:skrl_ppo_cfg.yaml",
+        "sb3_cfg_entry_point": f"{agents.__name__}:sb3_ppo_cfg.yaml",
+    },
+    ```
+  -> **Your project's name must contain "Template-"** before the name; otherwise, it will not register on Gymnasium and you will not be able to run it with your custom parameters.
+
+    
+  <details>
+
+
 **FILES TO COPY**
 Files to Copy (from the [IsaacLab](https://github.com/isaac-sim/IsaacLab) original project) into your external project
 
@@ -374,7 +405,7 @@ from . import humanoid  # noqa: F401       <<< ADDED THIS LINE
 - **4.1. HUMANOID TASK'S INIT** (`__init__.py`)
 Action: Copy from original project and modify
 - Rename: Add your project's name in `id`
-  -> **Your project's name must contain "Template-" before the name otherwise it will not register on Gymnasium and you will not be able to run it with your custom parameters** 
+  -> **Your project's name must contain "Template-"** before the name; otherwise, it will not register on Gymnasium and you will not be able to run it with your custom parameters 
 - Replace `f"{agents.__name__}` with the entire paths `isaaclab_tasks.manager_based.classic.humanoid.agents` - since we didn't import the entire agents folder. Use full path strings for the training configs pointing to Isaac Lab's original files
 - Delete `"rl_games_cfg_entry_point": "isaaclab_tasks.manager_based.classic.humanoid.agents:rl_games_ppo_cfg.yaml"` - You can delete this line if you're only using `rsl_rl` for training. The entry points are only needed for the RL libraries you actually use
 - Original path: `C:\Users\[YOUR USER]\isaaclab\source\isaaclab_tasks\isaaclab_tasks\manager_based\classic\humanoid\__init__.py`
