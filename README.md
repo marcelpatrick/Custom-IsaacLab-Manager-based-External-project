@@ -297,7 +297,7 @@ Episode_Termination/cart_out_of_bounds: 0.0830
 
 **Task: `My-Humanoid-v0`**
 
-<summary>Copying the Entire Folder (Expand)</summary>
+<summary>**Copying the Entire Folder (Expand)**</summary>
   <details>
     
   1. Copy the humanoid folder from the IsaacLab master project: `C:\Users\[YOUR USER]\IsaacLab\source\isaaclab_tasks\isaaclab_tasks\manager_based\classic\humanoid`, into your external project's task folder: `C:\Users\[YOUR USER]\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based`
