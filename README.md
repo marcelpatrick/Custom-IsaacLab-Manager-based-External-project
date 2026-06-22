@@ -325,7 +325,7 @@ Episode_Termination/cart_out_of_bounds: 0.0830
   -> **Your project's name must contain "Template-"** before the name; otherwise, it will not register on Gymnasium and you will not be able to run it with your custom parameters.
 
     
-  <details>
+  </details>
 
 
 **FILES TO COPY**
