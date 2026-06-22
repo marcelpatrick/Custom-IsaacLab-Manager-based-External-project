@@ -491,7 +491,7 @@ Next, we are going to run different tasks in our external project:
 
 # 4. Results
 
-<summary>New Results</summary>
+<summary>New Results:</summary>
 
   <details> 
       ```
