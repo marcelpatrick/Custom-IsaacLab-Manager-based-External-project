@@ -297,7 +297,7 @@ Episode_Termination/cart_out_of_bounds: 0.0830
 
 **Task: `My-Humanoid-v0`**
 
-<summary>**Copying the Entire Folder (Expand)**</summary>
+<summary>Copying the Entire Folder (Expand)</summary>
   <details>
     
   1. Copy the humanoid folder from the IsaacLab master project: `C:\Users\[YOUR USER]\IsaacLab\source\isaaclab_tasks\isaaclab_tasks\manager_based\classic\humanoid`, into your external project's task folder: `C:\Users\[YOUR USER]\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based`
@@ -306,7 +306,8 @@ Episode_Termination/cart_out_of_bounds: 0.0830
      import gymnasium as gym  # noqa: F401
      
      from . import humanoid # <<< ADD THIS LINE
-    ```
+     ```
+    
   3. Rename: Add "Template" to your project's nameID inside the task's (Humanoid) `__init__.py`: 
   - Open `__init__.py`: `"C:\Users\[YOUR USER]\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based\humanoid\__init__.py"` 
     ```py
