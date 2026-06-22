@@ -484,11 +484,13 @@ Next, we are going to run different tasks in our external project:
   ```
     
   </details>
-
+  
 ## 3.3: Run:
 - In your Anaconda Prompt terminal, activate your Python environment and go to the project root: `(env_isaaclab) C:\Users\[YOUR USER]\MyIsaacLabProject2>`, run: `python scripts/rsl_rl/train.py --task=Template-Isaac-Humanoid-v0`. Exit with Ctrl C
 - In the training and reward metrics in the CLI, you should see "Learning iteration" with the new value x/50, instead of x/1000
 
+</details>
+  
 # 4. Results
 
 <summary>New Results:</summary>
