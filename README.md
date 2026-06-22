@@ -408,7 +408,7 @@ Next, we are going to run different tasks in our external project:
 <summary>New Training Parameters (Expand)</summary>
   <details>
     
-    ```py
+```py
           # Copyright (c) 2022-2025, The Isaac Lab Project Developers (https://github.com/isaac-sim/IsaacLab/blob/main/CONTRIBUTORS.md).
     # All rights reserved.
     #
@@ -453,7 +453,7 @@ Next, we are going to run different tasks in our external project:
             max_grad_norm=1.0,
         )
   
-    ```
+  ```
     
   </details>
 
