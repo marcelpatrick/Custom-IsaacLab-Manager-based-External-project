@@ -405,46 +405,46 @@ Next, we are going to run different tasks in our external project:
 - File: `rsl_rl_ppo_cfg.py`
 - Path: `C:\Users\[YOUR USER]\MyIsaacLabProject2\source\MyIsaacLabProject2\MyIsaacLabProject2\tasks\manager_based\humanoid\agents\rsl_rl_ppo_cfg.py`
 
-<summary>New Training Parameters (Expand)</summary>
+<summary>New Training Parameters: (Expand)</summary>
   <details>
     
-```py
-
-    @configclass
-    class HumanoidPPORunnerCfg(RslRlOnPolicyRunnerCfg):
-        num_steps_per_env = 64 # <<< Changed from 32 to 64
-            # Meaning: how many simulator steps you collect per environment before each policy update.
-            # Increasing makes it wait to gather more observations before updating the policy, which can improve learning stability, 
-        max_iterations = 100 # <<< Changed from 1000 to 100
-            # Meaning: how many training update cycles PPO will run total.
-            # More iterations gives it more chances to learn. Decreased to 100 just for this test to finish quicker
-        save_interval = 50
-            # Meaning: how often to save checkpoints
-        experiment_name = "my_humanoid" # <<< CUSTOMIZE YOUR EXPERIMENT NAME:
-        policy = RslRlPpoActorCriticCfg(
-            init_noise_std=1.0, # too high = falls faster; too low = not enough exploration to discover walking.
-            actor_obs_normalization=True, # <<< Changed to True. improves stability and speed of learning when observations have very different scales
-            critic_obs_normalization=True, # <<< Changed to True. same as above, but for the value estimator (the part judging how good states are)
-            actor_hidden_dims=[400, 200, 100],
-            critic_hidden_dims=[400, 200, 100],
-            activation="elu",
-        )
-        algorithm = RslRlPpoAlgorithmCfg(
-            value_loss_coef=1.0,
-            use_clipped_value_loss=True,
-            clip_param=0.2,  # Limit on how big the policy update step can be. Ensures a smoother learning curve, preventing large updates that could destabilize training.
-            entropy_coef=0.005, # <<< Changed from 0 to 0.005. Extra reward for exploring more (trying new actions)
-            num_learning_epochs=8, # <<< Changed from 5 to 8. Number of times you learn from the same collected data per update.
-            num_mini_batches=4,
-            learning_rate=3e-4, # <<< Changed from 5.0e-4 to 3e-4.How big each learning step is
-            schedule="adaptive",
-            gamma=0.99,
-            lam=0.95,
-            desired_kl=0.01,
-            max_grad_norm=1.0,
-        )
-  
-```
+  ```py
+        
+          @configclass
+          class HumanoidPPORunnerCfg(RslRlOnPolicyRunnerCfg):
+              num_steps_per_env = 64 # <<< Changed from 32 to 64
+                  # Meaning: how many simulator steps you collect per environment before each policy update.
+                  # Increasing makes it wait to gather more observations before updating the policy, which can improve learning stability, 
+              max_iterations = 100 # <<< Changed from 1000 to 100
+                  # Meaning: how many training update cycles PPO will run total.
+                  # More iterations gives it more chances to learn. Decreased to 100 just for this test to finish quicker
+              save_interval = 50
+                  # Meaning: how often to save checkpoints
+              experiment_name = "my_humanoid" # <<< CUSTOMIZE YOUR EXPERIMENT NAME:
+              policy = RslRlPpoActorCriticCfg(
+                  init_noise_std=1.0, # too high = falls faster; too low = not enough exploration to discover walking.
+                  actor_obs_normalization=True, # <<< Changed to True. improves stability and speed of learning when observations have very different scales
+                  critic_obs_normalization=True, # <<< Changed to True. same as above, but for the value estimator (the part judging how good states are)
+                  actor_hidden_dims=[400, 200, 100],
+                  critic_hidden_dims=[400, 200, 100],
+                  activation="elu",
+              )
+              algorithm = RslRlPpoAlgorithmCfg(
+                  value_loss_coef=1.0,
+                  use_clipped_value_loss=True,
+                  clip_param=0.2,  # Limit on how big the policy update step can be. Ensures a smoother learning curve, preventing large updates that could destabilize training.
+                  entropy_coef=0.005, # <<< Changed from 0 to 0.005. Extra reward for exploring more (trying new actions)
+                  num_learning_epochs=8, # <<< Changed from 5 to 8. Number of times you learn from the same collected data per update.
+                  num_mini_batches=4,
+                  learning_rate=3e-4, # <<< Changed from 5.0e-4 to 3e-4.How big each learning step is
+                  schedule="adaptive",
+                  gamma=0.99,
+                  lam=0.95,
+                  desired_kl=0.01,
+                  max_grad_norm=1.0,
+              )
+          
+  ```
     
   </details>
 
