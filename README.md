@@ -3,6 +3,7 @@
 **Video Tutorials**
 - Video 1: https://youtu.be/L701v9QuQG4 - Running a Task Already in Your Project (Cartpole) - Change parameters: Chapter 1.2
 - Video 2: https://youtu.be/fq9DRCj9i7E - Running a Different training task with Default Parameters: Chapter 2.1
+- Video 3: https://youtu.be/pCQPj1X0OME - Running different tasks with Custom Parameters: Chapter 3
 
 # Pre-requisites:
 
