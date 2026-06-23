@@ -318,7 +318,7 @@ Next, we are going to run different tasks in our external project:
         "sb3_cfg_entry_point": f"{agents.__name__}:sb3_ppo_cfg.yaml",
     },
     ```
-  -> **Your project's name must contain "Template-"** before the name; otherwise, it will not register on Gymnasium and you will not be able to run it with your custom parameters.
+  -> Adding "Template-" as a name prefix is more of a naming convention to make your custom tasks easily findable. When you run the command `list_envs.py`, it filters by this and only prints tasks with this prefix. This makes it easier to filter out all the hundreds of NVIDIA template tasks already registered from your own. It also avoids name collisions. If you pick a name of a task already registered in Gymnasium (including the template NVIDIA tasks), the run will fail. 
   
 4. Run the copied Humanoid task with default parameters to test it
 - Run `python scripts/list_envs.py` to ensure that your environment has been registered in Gymnasium. Your project nameID must appear on the list containing "Template-" (eg: Template-Isaac-Humanoid-v0) otherwise, it won't register on Gymnasium.
